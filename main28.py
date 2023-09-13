@@ -15,7 +15,8 @@ timer = None
 
 
 # ---------------------------- TIMER RESET ------------------------------- #
-def reset_timer():
+def reset_timer() -> None:
+    """Reset the timer, and place the 00:00 on screen"""
     global reps
     window.after_cancel(timer)
     canvas.itemconfig(timer_text, text="00:00")
@@ -25,7 +26,8 @@ def reset_timer():
 
 
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
-def start_timer():
+def start_timer() -> None:
+    """Start the timer count considering which countdown need to be shown: work time, short break or long break"""
     global reps
     work_sec = WORK_MIN * SEC_IN_A_MIN
     short_break_sec = SHORT_BREAK_MIN * SEC_IN_A_MIN
@@ -44,14 +46,14 @@ def start_timer():
         title.config(text="Work", fg=RED)
         window.attributes('-topmost', 1)
 
-    #TODO verificar delay depois de 8 reps
-
+    #  reset repetitions after long break (8th rep)
     if reps > 8:
         reps = 0
 
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
-def count_down(count):
+def count_down(count: int) -> None:
+    """Execute the appropriate countdown and display correct time visualization"""
     global reps, timer
     window.attributes('-topmost', 0)
     count_min = math.floor(count / SEC_IN_A_MIN)
